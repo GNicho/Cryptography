@@ -2,14 +2,14 @@ __author__ = 'NichoEnGiani'
 
 plaintextK = "0 1 2 3 4 5 6 7 8 9 A B C D E F"
 
-initialPermutation = {'58', '50', '42', '34', '26', '18', '10', '2',
-                      '60', '52', '44', '36', '28', '20', '12', '4',
-                      '62', '54', '46', '38', '30', '22', '14', '6',
-                      '64', '56', '48', '40', '32', '24', '16', '8',
-                      '57', '49', '41', '33', '25', '17', '9', '1',
-                      '59', '51', '43', '35', '27', '19', '11', '3',
-                      '61', '53', '45', '37', '29', '21', '13', '5',
-                      '63', '55', '47', '39', '31', '23', '15', '7'}
+IP = [58, 50, 42, 34, 26, 18, 10, 2,
+                      60, 52, 44, 36, 28, 20, 12, 4,
+                      62, 54, 46, 38, 30, 22, 14, 6,
+                      64, 56, 48, 40, 32, 24, 16, 8,
+                      57, 49, 41, 33, 25, 17, 9, 1,
+                      59, 51, 43, 35, 27, 19, 11, 3,
+                      61, 53, 45, 37, 29, 21, 13, 5,
+                      63, 55, 47, 39, 31, 23, 15, 7]
 
 PC1 = [57, 49, 41, 33, 25, 17 , 9,
        1, 58, 50, 42, 34, 26, 18,
@@ -28,6 +28,15 @@ PC2 = [14, 17, 11, 24, 1, 5,
        30, 40, 51, 45, 33, 48,
        44, 49, 39, 36, 34, 53,
        46, 42, 50, 36, 29, 32 ]
+
+E = [32, 1, 2, 3, 4, 5,
+     4, 5, 6, 7, 8, 9,
+     8, 9, 10, 11, 12, 13,
+     12, 13, 14, 15, 16, 17,
+     16, 17, 16, 19, 20, 21,
+     20, 21, 22, 23, 24, 25,
+     24, 25, 26, 27, 28, 29,
+     28, 29, 30, 31, 32, 1]
 
 ascii2bin = {"0": "0000",
               "1": "0001",
@@ -54,15 +63,9 @@ def _convertPlain2bin(plaintext):
             K += ascii2bin[l]
     return K
 
-def _permutatePC1(K):
+def _permutate(K, list):
     result = ""
-    for p in PC1:
-        result += K[p-1]
-    return result
-
-def _permutatePC2(K):
-    result = ""
-    for p in PC2:
+    for p in list:
         result += K[p-1]
     return result
 
@@ -71,13 +74,23 @@ def _leftShift(K, val):
     K2 = K[int(len(K)/2):len(K)]
     return K1[val:len(K1)] + K1[0:val] + K2[val:len(K2)] + K2[0:val]
 
+def _format(string):
+    pos = 0
+    result = ""
+    while pos < len(string):
+        result += string[pos:pos+4] + " "
+        pos += 4
+    return result
+
 if __name__ == "__main__":
     print("Welcome to main")
     K = _convertPlain2bin(plaintextK)
-    print(K)
-    K = _permutatePC1(K)
-    print(K)
-    K = _leftShift(K, 1)
-    print(K)
-    K1 = _permutatePC2(K)
-    print(K1)
+    print("opl 1")
+    print(_leftShift(_permutate(K, PC1), 1))
+    print("opl 2")
+    LO = _permutate(K, IP)[0:int(len(_permutate(K, IP))/2)]
+    RO = _permutate(K, IP)[int(len(_permutate(K, IP))/2):int(len(_permutate(K, IP)))]
+    print(LO + " " + RO)
+    print("opl 3")
+    print(_permutate(RO, E))
+    print(_format(_permutate(RO, E)))

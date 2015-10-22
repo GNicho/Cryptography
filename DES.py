@@ -91,7 +91,7 @@ def _substituteSbox(bin):
     return result
 
 if __name__ == "__main__":
-    print("Welcome to DES encryptioin")
+    print("Welcome to DES encryption")
     K = _convertPlain2bin(plaintextK)
     print("Our plaintext in HEX is: " + plaintextK)
     print("To bin: " + _format(K, 4))
